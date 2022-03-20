@@ -1,4 +1,4 @@
-# Javascript single inheritance and multi inheritance.
+# Javascript single and multiple inheritance.
 
 ## The problem
 
