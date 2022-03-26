@@ -1,6 +1,7 @@
-# Node.js http file server: deliver files content and upload files.
+Node.js http file server: deliver files content and upload files
+================================================================
 
-## The problem
+# The problem
 
 Unless other server side languages like PHP in Node.js there is no file content delivery method by default but it is the server application which should be in charge of attending any file request from the client. This can be an adventage because the app has full control of the file delivering process so we can perform file delivering depending on any factors we may want to take in account. In other server side languages if we need to have extra control of the http file delivery process we must configure it from the http server or through some other tools. But in Node.js the app must perform this procedure which requires some extra code.
 
@@ -8,12 +9,12 @@ To perform file delivery we can find some simple scripts in javascript tutorials
 
 There is a better procedure to transfer files and it is by streaming. Streaming transfer uses data chunks, which are pieces of data that are transferred one by one so the memory doesn't need to keep the whole file content but only the chunk size at a time. This method speeds up the transfer process and avoid memory for collapsing. So we will cover in this text some scripts that can perform the file transfer through streaming.
 
-## The solution
+# The solution
 
 As we have exposed there are two http file delivering posibilities: one is from server to client and another one is from client to server. The first one, from server to client, is the most common of two meanwhile the second one is for uploading files, which is less common and used to be related to form submition. This last one is more complex because we also must create a file and store it in server. Lets analize these two cases.
 
 
-### Delivering files to client
+## Delivering files to client
 
 The key concept for file delivering is streaming. Streaming is an asyncronous way of managing flow of data by using a buffer in memory. This way we don't deal with the whole data at once but only the buffer size data at a time.
 
@@ -68,11 +69,11 @@ Worth mentioning that we could serve files as attached content (delivering them 
 'Content-Disposition': 'attachment'
 ```   
 
-### Receiving files from client
+## Receiving files from client
 
 For transfering files from client to server via http we have to do a multipart upload request. We will take a file from client with FormData and send it to the server. Form transmision format we use the encoding type named "multipart/form-data" that consists in a series of data separated with a boundary and containing some header and data body all encoded in ISO-8859-1 (latin1) as is the HTTP 1.1 default charset.
 
-#### Parsing content
+### Parsing content
 
 The following example illustrates "multipart/form-data" encoding. Suppose we have the following form:
 ```
@@ -301,6 +302,8 @@ const elements = await parseContent(request, filePath);
 The function fixBoundaryInBetween is a helper function that has the task of making some arrangements when the boundary phrase is broken in two pieces (the extraordinary situation when it comes between two chunks of data). Function parseContentCore behaves as a write stream by using a generator function. A generator function is similar to a promise but it can resolve several times so can send a result for each time it recieves a data chunck. For every chunk it makes a subrutine for extracting the content and joining it to the previous data piece. This way we it forms the whole file.
 
 This module works only with no Content-Transfer-Encoding defined, so regarding these encoding we would have two or more types of enconding at the source data. It is also defined for uploading just one file at a time.
+
+# Resources
 
 https://www.mariokandut.com/how-to-stream-to-an-http-response-in-node-js/
 

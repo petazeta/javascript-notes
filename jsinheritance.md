@@ -1,12 +1,13 @@
-# Javascript single and multiple inheritance.
+Javascript single and multiple inheritance
+==========================================
 
-## The problem
+# Abstract
 
 Javascript doesn't support multi inheritance and so we must achieve it somehow by a function or piece of code. Also Js uses prototypes instead of classes for the object oriented programming inheritance concept, and that is as well another dificulty. In this articule we will try to clarify how to build inheritance in Js and find a way to build up multi inheritance.
 
-## Javascript single inheritance approach
+# Javascript single inheritance approach
 
-### Javascript prototyping
+## Javascript prototyping
 
 Compared to class based languages, in Js there is no a class neather object instance of the class but a prototype, which can be seen as an upper layer of the object. Prototypes have methods and properties available for next layers.
 
@@ -26,7 +27,7 @@ In this example Array is the constructor and we are using the keyword new before
 
 Any object in Js is in the end an instance of 'Object' and its prototype is the last prototype in the prototype chain.
 
-### Inheriance in Js
+## Inheriance in Js
 
 According to Mario Kandut there are three ways to perform inheritance in Js:
 
@@ -35,7 +36,7 @@ According to Mario Kandut there are three ways to perform inheritance in Js:
 - Class-syntax constructors
 
 
-#### Functional
+### Functional
 
 The functional approach to create prototype chains is to use Object.create. The first Object create argument is the prototype and the second is the properties descriptor object. Let's have a look at an example. For the example code, we will use the animal and dog taxonomy, where animal is a prototype of dog.
 
@@ -81,7 +82,7 @@ Object.defineProperty(o, 'a', {
 
 (HABLAR AQUI DE LOS ATRIBUTOS DE UNA PROPIEDAD)
 
-#### Constructor Functions
+### Constructor Functions
 
 There is also another way of inheritance with Object.crate: Constructor functions or Object create classical inheritance.
 
@@ -124,7 +125,7 @@ rect.move(1, 1); // Outputs, 'Shape moved.'
 At the constructor function there is a property called prototype that points to the prototype to be inheredit for the objects instanced through the constructor function. The prototype in turn contains the property constructor that points to the constructor of the prototype.
 
 
-#### Class-syntax constructors
+### Class-syntax constructors
 
 The class syntax does significantly reduce boilerplate when creating a prototype chain.
 
@@ -168,7 +169,7 @@ To describe the full prototype chain:
 The class-syntax is the preferred way to create a prototype chain in JavaScript
 
 
-## Javascript multi inheritance approach
+# Javascript multi inheritance approach
 
 We can achieve a certain grade of multi inheritance with the functional approach by recycling the properties descriptor objects as mixins for the composal of objects. However at functional approach we have the inconvenient that we can not use the constructor, not the super keyword neither the static methods as we do when using class-syntax.
 
@@ -216,11 +217,12 @@ const ChiwawaMixing = Sup => class extends Sup {
 
 So with this methodology we can build multi inheritance at the top of the class syntax procedure preserving all the inheritance elements.
 
-## Composition
+# Composition
 
 There are another strategy for reusing classes that doesn't requires inheritance, this is composition. The strategy is to have instances of the minor objects in a main object rather than extend objects with functionality. In our code we are in favor of using multi inheritance and object mixins.
 
-Resources:
+# Resources
+
 https://www.mariokandut.com/inheritance-in-javascript-and-the-prototype-chain-explained/
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
