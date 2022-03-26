@@ -14,14 +14,14 @@ The http module can create an http server that listens to server ports and gives
 
 Use the createServer() method to create an http server:
 
-``
+```
 import http from 'http';
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   res.write('Hello World!');
   res.end();
 }).listen(8080);
-``
+```
 
 In the expamles we are using the ES6 notation for modules import which sometimes need some extra requirements so you should be noticed of it.
 
@@ -34,14 +34,14 @@ Other http servers like apache and maybe enginx serve pages based in the files p
 ### The switch strategy (routing)
 
 So as for any web server the server response would depend on the client request. Therefore our answer would depend on the request and this usually corresponds with a switch that would connect the response with the appropiate functionality.
-
+```
              |=>function A
 [request] => |=>function B
              |=>function C
-
+```
 To implement this methodology (also known as routing) we can use a Map element to set a list of the functionality. To determine which functionality use in each case we should also have some selection component. We can also integrate the selection procedure inside the funcionality so when that functionallity is not the apropiate for a specific request we can break and pass to the next option and so on untill we will find the suitable one (or we consume every option). This way we don't need an extra element in our main file. Lets see an example:
 
-````
+```
 import http from 'http';
 import url from 'url'; 
 
@@ -70,7 +70,7 @@ routerMap.set('contact', (request, response)=>{
     .then(({sendContent}) => sendContent(request, response));
   return true;
 });
-````
+```
 
 In the script we define a map and the elements in map will be functions that are checking if request should be answered or not for that component. When the condition of the request fulfil the map function case the suitable response is given by importing the subsequent module. In the example we are just checking the url path, but any request element (like parameters or host name) are suitable for the selection process.
 
