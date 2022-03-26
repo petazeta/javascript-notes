@@ -79,6 +79,8 @@ Object.defineProperty(o, 'a', {
 });
 ````
 
+(HABLAR AQUI DE LOS ATRIBUTOS DE UNA PROPIEDAD)
+
 #### Constructor Functions
 
 There is also another way of inheritance with Object.crate: Constructor functions or Object create classical inheritance.
@@ -136,9 +138,6 @@ class Animal {
   eat() {
     console.log(this.name + ' eats');
   }
-  static sum(valueA, valueB) {
-    console.log(valueA + valueB);
-  }
 }
 
 class Dog extends Animal {
@@ -148,12 +147,16 @@ class Dog extends Animal {
   bark() {
     console.log(this.name + ' barks');
   }
+  static moveTail(pet) {
+    console.log(pet.name + ' is moving its tail');
+  }
 }
 
 const henry = new Dog('Henry');
 
 henry.eat(); // prints "Henry the dog eats"
 henry.bark(); // prints "Hentry the dog barks"
+Dog.moveTail(henry): // prints "Henry the dog is moving its tail"
 ````
 
 To describe the full prototype chain:
@@ -167,17 +170,12 @@ The class-syntax is the preferred way to create a prototype chain in JavaScript
 
 ## Javascript multi inheritance approach
 
-With the functional approach we could simply write a objects mixin chain, this way the resulting object will inherit the mixin properties and methods. The inconvenient is that we can not use the constructor, nor the super keyword neither static methods.
+We can achieve a certain grade of multi inheritance with the functional approach by recycling the properties descriptor objects as mixins for the composal of objects. However at functional approach we have the inconvenient that we can not use the constructor, not the super keyword neither the static methods as we do when using class-syntax.
 
-Here it is an example for the dog taxonomy:
-
-``const henry = Object.create(Object.create(animal, dogMixin), chiwawaMixin);``
-
-
-But there is a smart class syntax solution for implementing multi inheritance in Js that is rarely seen but that covers all the inheritance elements as super class, constructor and static methods. It consists in using a function to define classes instead the class itself, lets see an example continuing with the dog paradox:
+But there is a smart class syntax solution for implementing multi inheritance in Js that is rarely seen but that covers all the inheritance elements as super class, constructor and static methods. It consists in using a function to define classes instead of the class itself, lets see an example continuing with the dog paradox:
 
 ````
-class Chiwawa = ChiwawaMixing(DogMixing(Animal));
+const Chiwawa = ChiwawaMixing(DogMixing(Animal));
 
 const henry = new Chiwawa('Henry');
 ````
@@ -185,7 +183,16 @@ const henry = new Chiwawa('Henry');
 The mixing funtions will be like:
 
 ````
-const DogMixing=Sup => class extends Sup {
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  eat() {
+    console.log(this.name + ' eats');
+  }
+}
+
+const DogMixing = Sup => class extends Sup {
   constructor(name) {
     super(name + ' the dog');
   }
@@ -193,15 +200,27 @@ const DogMixing=Sup => class extends Sup {
     console.log(this.name + ' barks');
   }
   static moveTail(pet) {
-    console.log(pet.name + 'is moving its tail');
+    console.log(pet.name + ' is moving its tail');
+  }
+}
+
+const ChiwawaMixing = Sup => class extends Sup {
+  constructor(name) {
+    super('chiwawa ' + name);
+  }
+  jump() {
+    console.log(this.name + ' jumps');
   }
 }
 ````
 
-So with this methodology we can build multi inheritance at the top of the class syntax procedure.
+So with this methodology we can build multi inheritance at the top of the class syntax procedure preserving all the inheritance elements.
 
+## Composition
 
-resources:
+There are another strategy for reusing classes that doesn't requires inheritance, this is composition. The strategy is to have instances of the minor objects in a main object rather than extend objects with functionality. In our code we are in favor of using multi inheritance and object mixins.
+
+Resources:
 https://www.mariokandut.com/inheritance-in-javascript-and-the-prototype-chain-explained/
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
